@@ -7,9 +7,9 @@
 *.sln.docstates
 
 # Build results
-[Dd]ebug/
-[Dd]ebugPublic/
-[Rr]elease/
+[Dd]ebug.win32/
+[Dd]ebugPublic.win32/
+[Rr]elease.win32/
 x64/
 build/
 bld/
