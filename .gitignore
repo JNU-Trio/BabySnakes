@@ -169,6 +169,7 @@ UpgradeLog*.htm
 *.rdl.data
 *.bim.layout
 *.bim_*.settings
+*.exe.stackdump
 
 # Microsoft Fakes
 FakesAssemblies/
