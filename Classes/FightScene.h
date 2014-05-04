@@ -32,8 +32,19 @@ public:
 	virtual bool init();
 	CREATE_FUNC(SnakesPlay);
 
+	//重写触屏回调函数
+	virtual bool ccTouchBegan(cocos2d::CCTouch* , cocos2d::CCEvent*);
+	virtual void ccTouchMoved(cocos2d::CCTouch* , cocos2d::CCEvent*);
+	virtual void ccTouchEnded(cocos2d::CCTouch* , cocos2d::CCEvent*);
+
+	void scheUpdate(float);
+	bool checkGame();
+	Food curfood;
+
 private:
+	bool m_disFlag;
 	std::vector<Snake *> m_snakes;
+	
 };
 
 #endif // __FIGHT_SCENE_H__

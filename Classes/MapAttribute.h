@@ -6,11 +6,37 @@
 struct Location
 {
 	int x,y;
+	bool operator==(const Location &src)
+	{
+		if (x == src.x && y == src.y)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
 };
 
-const int MAP_WIDTH = 20;
-const int MAP_HEIGHT = 12;
+struct SnakeLocation
+{
+	Location head,tail;
+	std::vector<Location> body;
+};
 
-extern cocos2d::CCPoint LocToPos(Location);
+class VirtualMap
+{
+public:
+	static const int MAP_WIDTH = 20;
+	static const int MAP_HEIGHT = 12;
+	static float SPEED;
+
+	static int DIRECTION;
+
+	static Location foodLocate;
+
+	static cocos2d::CCPoint LocToPos(Location);
+};
 
 #endif // __MAP_ATTRIBUTE_H_
