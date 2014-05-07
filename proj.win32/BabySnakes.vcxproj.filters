@@ -24,9 +24,6 @@
     <ClCompile Include="..\Classes\MapAttribute.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
-    <ClCompile Include="Food.cpp">
-      <Filter>Classes</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -42,9 +39,6 @@
       <Filter>Classes</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\MapAttribute.h">
-      <Filter>Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Food.h">
       <Filter>Classes</Filter>
     </ClInclude>
   </ItemGroup>

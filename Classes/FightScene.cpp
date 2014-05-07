@@ -120,7 +120,7 @@ bool SnakesPlay::init()
 
 	CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, 0, true);
 	this->setTouchEnabled(true);
-	this->schedule(schedule_selector(SnakesPlay::scheUpdate),0.2);
+	this->schedule(schedule_selector(SnakesPlay::scheUpdate),0.3);
 
 	return true;
 }
@@ -195,7 +195,7 @@ void SnakesPlay::scheUpdate(float time)
 
 
 
-
+	std::vector<SnakeLocation> pre_locs;
 	std::vector<SnakeLocation> locs;
 	for(int i=0; i<m_snakes.size(); i++)
 		locs.push_back(m_snakes[i]->m_snake);
@@ -209,7 +209,7 @@ void SnakesPlay::scheUpdate(float time)
 	}
 	else if (marsS.head == curfood.m_locate)
 	{
-		m_snakes[1]->eatFood(this,locs[1],snakeImages[1]);
+		m_snakes[1]->eatFood(this, locs[1],snakeImages[1]);
 		curfood.generate();
 		curfood.food->setPosition(VirtualMap::LocToPos(curfood.m_locate));
 	}
@@ -219,23 +219,25 @@ void SnakesPlay::scheUpdate(float time)
 	ctrls.push_back(new AIControl());
 
 	
-
+	
 
 	for(int i=0; i<ctrls.size(); i++)
 	{
-		Location nextLoc = ctrls[i]->nextMove(locs);
-		CCLOG("x:%d y:%d\n",nextLoc.x,nextLoc.y);
-		m_snakes[i]->moveTo(nextLoc);
+		SnakeLocation move = ctrls[i]->nextMove(m_snakes[i]->m_snake);
+		CCLOG("x:%d y:%d\n",locs[i].tail.x, locs[i].tail.y);
+		//CCLOG("x:%d y:%d\n",pre_locs[i].tail.x, pre_locs[i].tail.y);
+		CCLOG("x:%d y:%d\n",move.tail.x,move.tail.y);
+		m_snakes[i]->moveTo(move);
 	}
 }
 
 bool SnakesPlay::checkGame()
 {
 	SnakeLocation earthS = m_snakes[0]->m_snake, marsS = m_snakes[1]->m_snake;
-	if (earthS.head.x > VirtualMap::MAP_WIDTH || earthS.head.x < 0
-		|| earthS.head.y > VirtualMap::MAP_HEIGHT || earthS.head.y < 0
-		|| marsS.head.x > VirtualMap::MAP_WIDTH || marsS.head.x < 0
-		|| marsS.head.y > VirtualMap::MAP_HEIGHT || marsS.head.y < 0)
+	if (earthS.head.x > VirtualMap::MAP_WIDTH || earthS.head.x <= 0
+		|| earthS.head.y > VirtualMap::MAP_HEIGHT || earthS.head.y <= 0
+		|| marsS.head.x > VirtualMap::MAP_WIDTH || marsS.head.x <= 0
+		|| marsS.head.y > VirtualMap::MAP_HEIGHT || marsS.head.y <= 0)
 	{
 		return false;
 	}

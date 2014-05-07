@@ -4,9 +4,11 @@
 
 USING_NS_CC;
 
-bool SimpleSnake::moveTo(Location nextLoc)
+bool SimpleSnake::moveTo(SnakeLocation aftermove)
 {
+	m_snake = aftermove;
 	int bodysize = m_snake.body.size();
+	/**
 	m_snake.tail = m_snake.body[bodysize-1];
 	for(int i=bodysize-1; i>0; i--)
 	{
@@ -14,7 +16,7 @@ bool SimpleSnake::moveTo(Location nextLoc)
 	}
 	m_snake.body[0] = m_snake.head;
 	m_snake.head = nextLoc;
-
+	***/
 	CCActionInterval* headaction = CCMoveTo::create(VirtualMap::SPEED,VirtualMap::LocToPos(m_snake.head));
 	std::vector<CCActionInterval*> bodyaction;
 	for(int i=0; i<bodysize; i++)
@@ -35,7 +37,7 @@ bool SimpleSnake::moveTo(Location nextLoc)
 
 void SimpleSnake::eatFood(CCLayer *father_layer, SnakeLocation pre_loc, SnakeImgFilename snakeImg)
 {
-
+	
 	CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
 	CCSize contentSize;
 
@@ -53,7 +55,7 @@ void SimpleSnake::eatFood(CCLayer *father_layer, SnakeLocation pre_loc, SnakeImg
 		m_sbody[i]->setPosition(VirtualMap::LocToPos(m_snake.body[i]));
 		father_layer->addChild(m_sbody[i]);
 
-
+		
 }
 
 bool SimpleSnake::initialize(CCLayer *father_layer, SnakeLocation virtualSnakeLoc, SnakeImgFilename snakeImg)
@@ -96,9 +98,10 @@ bool SimpleSnake::initialize(CCLayer *father_layer, SnakeLocation virtualSnakeLo
 }
 
 
-Location HumanControl::nextMove(std::vector<SnakeLocation> tmp)
+SnakeLocation HumanControl::nextMove(SnakeLocation p)
 {
-	Location ret = tmp[0].head;
+	SnakeLocation tmp = p;
+	Location ret = tmp.head;
 	switch(VirtualMap::DIRECTION)
 	{
 	case 0: ret.x--; break;
@@ -106,12 +109,24 @@ Location HumanControl::nextMove(std::vector<SnakeLocation> tmp)
 	case 2: ret.x++; break;
 	case 3: ret.y--; break;
 	}
-	return ret;
+
+	int bodysize = tmp.body.size();
+	tmp.tail = tmp.body[bodysize-1];
+	for(int i=bodysize-1; i>0; i--)
+	{
+		tmp.body[i] = tmp.body[i-1];
+	}
+	tmp.body[0] = tmp.head;
+	tmp.head = ret;
+
+	return tmp;
 }
 
-Location AIControl::nextMove(std::vector<SnakeLocation> snakes)
+SnakeLocation AIControl::nextMove(SnakeLocation p)
 {
-	Location ret = snakes[1].head;
+
+	SnakeLocation snake = p;
+	Location ret = snake.head;
 	if (VirtualMap::foodLocate.x - ret.x < 0)
 		ret.x--;
 	else if (VirtualMap::foodLocate.x - ret.x > 0)
@@ -120,6 +135,16 @@ Location AIControl::nextMove(std::vector<SnakeLocation> snakes)
 		ret.y--;
 	else
 		ret.y++;
+
+	int bodysize = snake.body.size();
+	snake.tail = snake.body[bodysize-1];
+	for(int i=bodysize-1; i>0; i--)
+	{
+		snake.body[i] = snake.body[i-1];
+	}
+	snake.body[0] = snake.head;
+	snake.head = ret;
+
 	/*
 	int sum = 0;
 	while (true)
@@ -174,8 +199,8 @@ Location AIControl::nextMove(std::vector<SnakeLocation> snakes)
 		if (flag)
 			break;
 	}*/
-
-	return ret;
+	
+	return snake;
 }
 
 bool Food::generate()

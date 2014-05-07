@@ -15,7 +15,7 @@ class Snake
 {
 public:
 	// 蛇移向下一个位置
-	virtual bool moveTo(Location)=0;
+	virtual bool moveTo(SnakeLocation)=0;
 
 	// 蛇吃食物
 	virtual void eatFood(cocos2d::CCLayer *, SnakeLocation, SnakeImgFilename)=0;
@@ -34,7 +34,7 @@ public:
 // 继承抽象蛇的简单蛇
 class SimpleSnake : public Snake
 {
-	bool moveTo(Location);
+	bool moveTo(SnakeLocation);
 	void eatFood(cocos2d::CCLayer *, SnakeLocation, SnakeImgFilename);
 	bool initialize(cocos2d::CCLayer *, SnakeLocation, SnakeImgFilename);
 };
@@ -42,17 +42,17 @@ class SimpleSnake : public Snake
 class Control
 {
 public:
-	virtual Location nextMove(std::vector<SnakeLocation>) = 0;
+	virtual SnakeLocation nextMove(SnakeLocation) = 0;
 };
 
 class AIControl : public Control
 {
-	Location nextMove(std::vector<SnakeLocation>);
+	SnakeLocation nextMove(SnakeLocation);
 };
 
 class HumanControl : public Control
 {
-	Location nextMove(std::vector<SnakeLocation>);
+	SnakeLocation nextMove(SnakeLocation);
 };
 
 class Food
