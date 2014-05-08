@@ -15,10 +15,10 @@ class Snake
 {
 public:
 	// 蛇移向下一个位置
-	virtual bool moveTo(SnakeLocation)=0;
+	virtual bool moveTo(Location)=0;
 
 	// 蛇吃食物
-	virtual void eatFood(cocos2d::CCLayer *, SnakeLocation, SnakeImgFilename)=0;
+	virtual void eatFood(cocos2d::CCLayer *)=0;
 
 	// 蛇的初始化
 	virtual bool initialize(cocos2d::CCLayer *, SnakeLocation, SnakeImgFilename)=0;
@@ -29,30 +29,33 @@ public:
 	// 组成蛇的sprite集合
 	cocos2d::CCSprite *m_shead, *m_stail;
 	std::vector<cocos2d::CCSprite *> m_sbody;
+
+	// 组成蛇的图片
+	SnakeImgFilename m_snakeImage;
 };
 
 // 继承抽象蛇的简单蛇
 class SimpleSnake : public Snake
 {
-	bool moveTo(SnakeLocation);
-	void eatFood(cocos2d::CCLayer *, SnakeLocation, SnakeImgFilename);
+	bool moveTo(Location);
+	void eatFood(cocos2d::CCLayer *);
 	bool initialize(cocos2d::CCLayer *, SnakeLocation, SnakeImgFilename);
 };
 
 class Control
 {
 public:
-	virtual SnakeLocation nextMove(SnakeLocation) = 0;
+	virtual Location nextMove(SnakeLocation) = 0;
 };
 
 class AIControl : public Control
 {
-	SnakeLocation nextMove(SnakeLocation);
+	Location nextMove(SnakeLocation);
 };
 
 class HumanControl : public Control
 {
-	SnakeLocation nextMove(SnakeLocation);
+	Location nextMove(SnakeLocation);
 };
 
 class Food
@@ -60,7 +63,16 @@ class Food
 public:
 	Location m_locate;
 	bool generate();
-	cocos2d::CCNode *food;
+	cocos2d::CCNode *m_food;
+};
+
+class Barrier
+{
+public:
+	std::vector<Location> m_locate;
+	std::vector<cocos2d::CCSprite *> m_images;
+	char *imgFilename;
+	bool init(cocos2d::CCLayer *, const std::vector<Location> &, char *);
 };
 
 #endif // __SNAKES_H_

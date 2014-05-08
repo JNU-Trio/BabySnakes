@@ -1,6 +1,8 @@
 #include "FightScene.h"
 #include "Snakes.h"
 
+#include <vector>
+
 USING_NS_CC;
 
 CCScene* FightScene::scene()
@@ -54,19 +56,72 @@ bool SnakesPlay::init()
 	if (!CCLayer::init())
 		return false;
 
-	curfood.generate();
-
 	CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
 	CCSize contentSize;
 
-	// 创建food
-	curfood.food = CCSprite::create("foods/shit.png");
-	contentSize = curfood.food->getContentSize();
-	curfood.food->setScaleX(visibleSize.width/VirtualMap::MAP_WIDTH/contentSize.width);
-	curfood.food->setScaleY(visibleSize.height/VirtualMap::MAP_HEIGHT/contentSize.height);
-	curfood.food->setPosition(VirtualMap::LocToPos(curfood.m_locate));
-	this->addChild(curfood.food);
+	// 初始化地图
+	VirtualMap::init();
 
+	// 创建墙
+	std::vector<Location> batmp;
+	for(int i=1; i<=VirtualMap::MAP_WIDTH; i++)
+	{
+		Location p;
+		p.x = i;
+		p.y = 1;
+		batmp.push_back(p);
+		p.x = i;
+		p.y = VirtualMap::MAP_HEIGHT;
+		batmp.push_back(p);
+	}
+
+	for(int i=2; i<VirtualMap::MAP_HEIGHT; i++)
+	{
+		Location p;
+		p.x = 1;
+		p.y = i;
+		batmp.push_back(p);
+		p.x = VirtualMap::MAP_WIDTH;
+		p.y = i;
+		batmp.push_back(p);
+	}
+	m_walls.init(this,batmp,"barriers/wall.png");
+
+	// 创建障碍物
+	batmp.clear();
+	for(int i=5; i<=8; i++)
+	{
+		Location p;
+		p.x = i;
+		p.y = 4;
+		batmp.push_back(p);
+	}
+
+	for(int i=14; i<=17; i++)
+	{
+		Location p;
+		p.x = i;
+		p.y = 8;
+		batmp.push_back(p);
+	}
+	Location p;
+	p.x = 17;
+	p.y = 7;
+	batmp.push_back(p);
+	m_barriers.init(this,batmp,"barriers/barrier.png");
+
+	// 创建food
+	curfood.m_food = CCSprite::create("foods/shit.png");
+	contentSize = curfood.m_food->getContentSize();
+	curfood.m_food->setScaleX(visibleSize.width/VirtualMap::MAP_WIDTH/contentSize.width);
+	curfood.m_food->setScaleY(visibleSize.height/VirtualMap::MAP_HEIGHT/contentSize.height);
+	curfood.m_food->setPosition(VirtualMap::LocToPos(curfood.m_locate));
+	this->addChild(curfood.m_food);
+	curfood.m_locate.x = 3;
+	curfood.m_locate.y = 3;
+	curfood.generate();
+
+	// 创建蛇对象
 	Snake *snake = new SimpleSnake();
 	m_snakes.push_back(snake);
 	snake = new SimpleSnake();
@@ -180,67 +235,66 @@ void SnakesPlay::scheUpdate(float time)
 		CCDirector::sharedDirector()->end();
 	}
 
-	SnakeImgFilename curImage;
-	std::vector<SnakeImgFilename> snakeImages;
-	
-	curImage.head = "snakes/snakehead1.png";
-	curImage.body = "snakes/snakebody1.png";
-	curImage.tail = "snakes/snaketail1.png";
-	snakeImages.push_back(curImage);
-
-	curImage.head = "snakes/snakehead2.png";
-	curImage.body = "snakes/snakebody2.png";
-	curImage.tail = "snakes/snaketail2.png";
-	snakeImages.push_back(curImage);
-
-
-
-	std::vector<SnakeLocation> pre_locs;
-	std::vector<SnakeLocation> locs;
 	for(int i=0; i<m_snakes.size(); i++)
-		locs.push_back(m_snakes[i]->m_snake);
-
-	SnakeLocation earthS = m_snakes[0]->m_snake, marsS = m_snakes[1]->m_snake;
-	if (earthS.head == curfood.m_locate)
-	{	
-		m_snakes[0]->eatFood(this, locs[0],snakeImages[0]);
-		curfood.generate();
-		curfood.food->setPosition(VirtualMap::LocToPos(curfood.m_locate));
-	}
-	else if (marsS.head == curfood.m_locate)
 	{
-		m_snakes[1]->eatFood(this, locs[1],snakeImages[1]);
-		curfood.generate();
-		curfood.food->setPosition(VirtualMap::LocToPos(curfood.m_locate));
+		if (m_snakes[i]->m_snake.head == curfood.m_locate)
+		{
+			m_snakes[i]->eatFood(this);
+			curfood.generate();
+		}
 	}
 
 	std::vector<Control *> ctrls;
 	ctrls.push_back(new HumanControl());
 	ctrls.push_back(new AIControl());
 
-	
-	
-
 	for(int i=0; i<ctrls.size(); i++)
 	{
-		SnakeLocation move = ctrls[i]->nextMove(m_snakes[i]->m_snake);
-		CCLOG("x:%d y:%d\n",locs[i].tail.x, locs[i].tail.y);
-		//CCLOG("x:%d y:%d\n",pre_locs[i].tail.x, pre_locs[i].tail.y);
-		CCLOG("x:%d y:%d\n",move.tail.x,move.tail.y);
-		m_snakes[i]->moveTo(move);
+		Location nextLoc = ctrls[i]->nextMove(m_snakes[i]->m_snake);
+		m_snakes[i]->moveTo(nextLoc);
 	}
 }
 
 bool SnakesPlay::checkGame()
 {
-	SnakeLocation earthS = m_snakes[0]->m_snake, marsS = m_snakes[1]->m_snake;
-	if (earthS.head.x > VirtualMap::MAP_WIDTH || earthS.head.x <= 0
-		|| earthS.head.y > VirtualMap::MAP_HEIGHT || earthS.head.y <= 0
-		|| marsS.head.x > VirtualMap::MAP_WIDTH || marsS.head.x <= 0
-		|| marsS.head.y > VirtualMap::MAP_HEIGHT || marsS.head.y <= 0)
+	for(int i=0; i<m_snakes.size(); i++)
 	{
-		return false;
+		for(int j=0; j<m_snakes[i]->m_snake.body.size(); j++)
+		{
+			Location p = m_snakes[i]->m_snake.body[j];
+			VirtualMap::map[p.x][p.y] = VirtualMap::earthSnakeTag;
+		}
+		Location p = m_snakes[i]->m_snake.tail;
+		VirtualMap::map[p.x][p.y] = VirtualMap::earthSnakeTag;
 	}
+
+	for(int i=0; i<m_snakes.size(); i++)
+	{
+		Location p = m_snakes[i]->m_snake.head;
+		if (VirtualMap::map[p.x][p.y] != VirtualMap::emptyTag
+			&& VirtualMap::map[p.x][p.y] != VirtualMap::foodTag)
+			return false;
+	}
+	if (m_snakes[0]->m_snake.head == m_snakes[1]->m_snake.head)
+		return false;
+
+	for(int i=0; i<m_snakes.size(); i++)
+	{
+		Location p = m_snakes[i]->m_snake.head;
+		VirtualMap::map[p.x][p.y] = VirtualMap::earthSnakeTag;
+	}
+
+	Location p = VirtualMap::foodLocate;
+	VirtualMap::map[p.x][p.y] = VirtualMap::foodTag;
+
+	return true;
+
+
+	/*SnakeLocation earthS = m_snakes[0]->m_snake, marsS = m_snakes[1]->m_snake;
+	for(int i=0; i<m_snakes.size(); i++)
+		for(int j=0; j<=m_walls.m_locate.size(); j++)
+			if (m_walls.m_locate[i] == m_snakes[i]->m_snake.head)
+				return false;
 	if (earthS.head == marsS.head)
 		return false;
 	if (earthS.head == marsS.tail)
@@ -253,6 +307,6 @@ bool SnakesPlay::checkGame()
 		return false;
 	for(int i=0; i<earthS.body.size(); i++)
 		if (marsS.head == earthS.body[i])
-			return false;
+			return false;*/
 	return true;
 }

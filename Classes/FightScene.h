@@ -40,6 +40,8 @@ public:
 	void scheUpdate(float);
 	bool checkGame();
 	Food curfood;
+	Barrier m_walls;
+	Barrier m_barriers;
 
 private:
 	bool m_disFlag;

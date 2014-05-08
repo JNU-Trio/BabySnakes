@@ -5,6 +5,7 @@
 
 struct Location
 {
+	int direction;
 	int x,y;
 	bool operator==(const Location &src)
 	{
@@ -34,9 +35,19 @@ public:
 
 	static int DIRECTION;
 
+	static int map[100][100];
+
 	static Location foodLocate;
 
+	static const int emptyTag = 0;
+	static const int foodTag = 1;
+	static const int earthSnakeTag = 2;
+	static const int marsSnakeTag = 3;
+	static const int barrierTag = 4;
+
 	static cocos2d::CCPoint LocToPos(Location);
+
+	static bool init();
 };
 
 #endif // __MAP_ATTRIBUTE_H_

@@ -134,6 +134,7 @@ xcopy /Y /Q "$(COCOS2DX_HOME)\external\libwebsockets\win32\lib\*.*" "$(OutDir)"<
   <ItemGroup>
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
     <ClCompile Include="..\Classes\FightScene.cpp" />
+    <ClCompile Include="..\Classes\InforLayer.cpp" />
     <ClCompile Include="..\Classes\MapAttribute.cpp" />
     <ClCompile Include="..\Classes\Snakes.cpp" />
     <ClCompile Include="main.cpp" />
@@ -141,6 +142,7 @@ xcopy /Y /Q "$(COCOS2DX_HOME)\external\libwebsockets\win32\lib\*.*" "$(OutDir)"<
   <ItemGroup>
     <ClInclude Include="..\Classes\AppDelegate.h" />
     <ClInclude Include="..\Classes\FightScene.h" />
+    <ClInclude Include="..\Classes\InfoLayer.h" />
     <ClInclude Include="..\Classes\MapAttribute.h" />
     <ClInclude Include="..\Classes\Snakes.h" />
     <ClInclude Include="main.h" />
