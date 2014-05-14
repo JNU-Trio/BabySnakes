@@ -25,11 +25,13 @@ bool SimpleSnake::moveTo(Location nextLoc)
 	CCActionInterval* tailaction = CCMoveTo::create(VirtualMap::SPEED,VirtualMap::LocToPos(m_snake.tail));
 	
 	m_shead->runAction(headaction);
+	m_shead->setRotation(m_snake.head.direction);
 	for(int i=0; i<bodysize; i++)
 	{
 		m_sbody[i]->runAction(bodyaction[i]);
 	}
 	m_stail->runAction(tailaction);
+	m_stail->setRotation(m_snake.tail.direction);
 	return true;
 }
 
@@ -69,6 +71,14 @@ bool SimpleSnake::initialize(CCLayer *father_layer, SnakeLocation virtualSnakeLo
 	m_shead->setScaleX(visibleSize.width/VirtualMap::MAP_WIDTH/contentSize.width);
 	m_shead->setScaleY(visibleSize.height/VirtualMap::MAP_HEIGHT/contentSize.height);
 	m_shead->setPosition(VirtualMap::LocToPos(m_snake.head));
+	m_shead->setRotation(m_snake.head.direction);
+	/*
+	switch(m_snake.head.direction){
+	case Location::TURN_UP: m_shead->setRotation(90);break;
+	case Location::TURN_LEFT:m_shead->setRotation(180);break;
+	case Location::TURN_DOWN:m_shead->setRotation(270);break;
+	}
+	*/
 	father_layer->addChild(m_shead);
 
 	// tail创建sprite
@@ -77,6 +87,7 @@ bool SimpleSnake::initialize(CCLayer *father_layer, SnakeLocation virtualSnakeLo
 	m_stail->setScaleX(visibleSize.width/VirtualMap::MAP_WIDTH/contentSize.width);
 	m_stail->setScaleY(visibleSize.height/VirtualMap::MAP_HEIGHT/contentSize.height);
 	m_stail->setPosition(VirtualMap::LocToPos(m_snake.tail));
+	m_stail->setRotation(m_snake.tail.direction);
 	father_layer->addChild(m_stail);
 
 	//  body创建sprite
@@ -100,10 +111,10 @@ Location HumanControl::nextMove(SnakeLocation p)
 	Location ret = p.head;
 	switch(VirtualMap::DIRECTION)
 	{
-	case 0: ret.x--; break;
-	case 1: ret.y++; break;
-	case 2: ret.x++; break;
-	case 3: ret.y--; break;
+	case 0: ret.x--;ret.direction =Location::TURN_LEFT; break;
+	case 1: ret.y++;ret.direction =Location::TURN_UP; break;
+	case 2: ret.x++;ret.direction =Location::TURN_RIGHT; break;
+	case 3: ret.y--;ret.direction =Location::TURN_DOWN; break;
 	}
 
 	return ret;
@@ -144,6 +155,20 @@ Location AIControl::nextMove(SnakeLocation p)
 	m %= 4;
 	ret.x += dir[m][0];
 	ret.y += dir[m][1];
+	if(dir[m][0]!=0){
+		if(dir[m][0]==1)
+			ret.direction = Location::TURN_RIGHT;
+		else
+			ret.direction = Location::TURN_LEFT;
+	}
+	else if(dir[m][0]==0){
+		if(dir[m][1]==1)
+			ret.direction = Location::TURN_UP;
+		else
+			ret.direction = Location::TURN_DOWN;
+	}
+
+	
 	return ret;
 
 	/*

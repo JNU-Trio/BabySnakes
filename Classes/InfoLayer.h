@@ -8,6 +8,7 @@ class InfoLayer : public cocos2d::CCLayer
 	public:
 	virtual bool init();
 	CREATE_FUNC(InfoLayer);
+
 };
 
 #endif // __INFOLAYER_H_

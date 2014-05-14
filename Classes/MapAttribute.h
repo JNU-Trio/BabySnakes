@@ -18,6 +18,10 @@ struct Location
 			return false;
 		}
 	}
+	static const int TURN_LEFT = 180;
+	static const int TURN_RIGHT = 0;
+	static const int TURN_UP = 270;
+	static const int TURN_DOWN = 90;
 };
 
 struct SnakeLocation

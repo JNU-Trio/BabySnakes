@@ -3,7 +3,7 @@
 #include <vector>
 
 int VirtualMap::DIRECTION = 0;
-float VirtualMap::SPEED = 0.15;
+float VirtualMap::SPEED = 0.1;
 Location VirtualMap::foodLocate;
 int VirtualMap::map[100][100];
 

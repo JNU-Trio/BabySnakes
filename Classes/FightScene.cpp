@@ -1,4 +1,7 @@
 #include "FightScene.h"
+#include "StartScene.h"
+#include "GameOverScene.h"
+#include "InfoLayer.h"
 #include "Snakes.h"
 
 #include <vector>
@@ -13,6 +16,11 @@ CCScene* FightScene::scene()
 	// 添加背景
     FightScene *bglayer = FightScene::create();
 	scene->addChild(bglayer, m_bglayer_zOrder, m_bglayer_tag);
+
+	//添加计分层
+	InfoLayer *infolayer = InfoLayer::create();
+	scene->addChild(infolayer,3,3);
+
 
 	// 添加蛇的运动层
 	SnakesPlay *playlayer = SnakesPlay::create();
@@ -87,6 +95,22 @@ bool SnakesPlay::init()
 	}
 	m_walls.init(this,batmp,"barriers/wall.png");
 
+	isStop = false;
+	CCMenuItemImage *StopGameItem = CCMenuItemImage::create("buttons/pause.png", "buttons/pause.png");
+	CCMenuItemImage *StartGameItem = CCMenuItemImage::create("buttons/play.png", "buttons/paly.png");
+	CCMenuItemToggle *StopOrStartItem = CCMenuItemToggle::createWithTarget(this,menu_selector(SnakesPlay::StopGameCallback), StopGameItem,StartGameItem, NULL);  
+	StopOrStartItem->setEnabled(true);
+	StopOrStartItem->setScale(0.5);
+
+	//StopOrStartItem->setPosition(ccp(, 1));
+
+	CCMenu* itemToggleMenu = CCMenu::create(StopOrStartItem, NULL);  
+	itemToggleMenu->setPosition(ccp(visibleSize.width-20, 20));  
+	this->addChild(itemToggleMenu, 1);  
+
+	GameOver *gameover = GameOver::create();
+	this->addChild(gameover, 4,4);
+
 	// 创建障碍物
 	batmp.clear();
 	for(int i=5; i<=8; i++)
@@ -137,11 +161,14 @@ bool SnakesPlay::init()
 	// 创建地球蛇位置
 	curSnake.head.x = 8;
 	curSnake.head.y = 5;
+	curSnake.head.direction = Location::TURN_RIGHT;
 	curSnake.tail.x = 6;
 	curSnake.tail.y = 5;
+	curSnake.tail.direction = Location::TURN_RIGHT;
 	Location tmp;
 	tmp.x = 7;
 	tmp.y = 5;
+	tmp.direction = Location::TURN_RIGHT;
 	curSnake.body.push_back(tmp);
 	virtualSnakes.push_back(curSnake);
 
@@ -154,10 +181,13 @@ bool SnakesPlay::init()
 	// 创建火星蛇位置
 	curSnake.head.x = 15;
 	curSnake.head.y = 5;
+	curSnake.head.direction = Location::TURN_LEFT;
 	curSnake.tail.x = 17;
 	curSnake.tail.y = 5;
+	curSnake.tail.direction = Location::TURN_LEFT;
 	tmp.x = 16;
 	tmp.y = 5;
+	tmp.direction = Location::TURN_LEFT;
 	curSnake.body.clear(); // 注意要清空
 	curSnake.body.push_back(tmp);
 	virtualSnakes.push_back(curSnake);
@@ -175,7 +205,7 @@ bool SnakesPlay::init()
 
 	CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, 0, true);
 	this->setTouchEnabled(true);
-	this->schedule(schedule_selector(SnakesPlay::scheUpdate),0.3);
+	this->schedule(schedule_selector(SnakesPlay::scheUpdate),0.3); 
 
 	return true;
 }
@@ -232,7 +262,8 @@ void SnakesPlay::scheUpdate(float time)
 {
 	if (!checkGame())
 	{
-		CCDirector::sharedDirector()->end();
+		CCDirector::sharedDirector()->replaceScene(GameOverScene::scene());
+		
 	}
 
 	for(int i=0; i<m_snakes.size(); i++)
@@ -309,4 +340,64 @@ bool SnakesPlay::checkGame()
 		if (marsS.head == earthS.body[i])
 			return false;*/
 	return true;
+}
+
+void SnakesPlay::StopGameCallback(CCObject* pSender){
+	if(!isStop){
+		CCDirector::sharedDirector()->pause();
+		isStop = true;
+	}
+	else{
+		CCDirector::sharedDirector()->resume();
+		isStop = false;
+	}
+}
+
+bool GameOver::init(){
+	if(!CCLayer::init())
+	{
+		return false;
+	}
+	CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
+    CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
+
+    // 添加背景图片
+    CCSprite* pSprite = CCSprite::create("backgrounds/gameover.png");
+
+    // 设置背景位置
+    pSprite->setPosition(ccp(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
+
+	// 背景图片缩放
+	CCSize bgimgSize = pSprite->getContentSize();
+	pSprite->setScaleX(visibleSize.width/bgimgSize.width);
+	pSprite->setScaleY(visibleSize.height/bgimgSize.height);
+	//pSprite->setScale(0.5);
+
+    // 将背景sprite作为子结点加入本layer
+    this->addChild(pSprite, 0);
+
+	CCMenuItemImage *newGameItem = CCMenuItemImage::create("buttons/playbutton.png", "buttons/pausebutton.png",this,menu_selector(GameOver::StartNewGameCallback));
+    newGameItem->setScale(0.1);
+    newGameItem->setPosition(ccp(visibleSize.width / 3,visibleSize.height / 2 - 20));
+    newGameItem->setEnabled(true);
+
+	CCMenuItemImage *exitGameItem = CCMenuItemImage::create("buttons/playbutton.png", "buttons/pausebutton.png",this,menu_selector(GameOver::ExitGameCallback));
+    exitGameItem->setScale(0.1);
+    exitGameItem->setPosition(ccp(visibleSize.width*2 / 3,visibleSize.height / 2 - 20));
+    exitGameItem->setEnabled(true);
+
+	CCMenu* mainmenu = CCMenu::create(newGameItem,exitGameItem,NULL);
+    mainmenu->setPosition(ccp(0,0));
+    this->addChild(mainmenu,1,3);
+	this->setVisible(false);
+}
+
+void GameOver::StartNewGameCallback(CCObject* pSender)
+{
+    CCDirector::sharedDirector()->replaceScene(FightScene::scene());
+}
+
+void GameOver::ExitGameCallback(CCObject* pSender)
+{
+	CCDirector::sharedDirector()->end();
 }

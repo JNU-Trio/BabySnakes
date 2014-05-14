@@ -37,6 +37,7 @@ public:
 	virtual void ccTouchMoved(cocos2d::CCTouch* , cocos2d::CCEvent*);
 	virtual void ccTouchEnded(cocos2d::CCTouch* , cocos2d::CCEvent*);
 
+	void StopGameCallback(CCObject* pSender);
 	void scheUpdate(float);
 	bool checkGame();
 	Food curfood;
@@ -46,7 +47,17 @@ public:
 private:
 	bool m_disFlag;
 	std::vector<Snake *> m_snakes;
-	
+	bool isStop;
 };
 
+class GameOver: public cocos2d::CCLayer
+{
+public:
+	virtual bool init();
+	CREATE_FUNC(GameOver);
+	void StartNewGameCallback(CCObject* pSender);
+	void ReturnHomeCallback(CCObject* pSender);
+	void ExitGameCallback(CCObject* pSender);
+
+};
 #endif // __FIGHT_SCENE_H__
