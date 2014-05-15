@@ -5,7 +5,7 @@
 
 class InfoLayer : public cocos2d::CCLayer
 {
-	public:
+public:
 	virtual bool init();
 	CREATE_FUNC(InfoLayer);
 

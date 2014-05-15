@@ -23,7 +23,7 @@ bool SimpleSnake::moveTo(Location nextLoc)
 		bodyaction.push_back(CCMoveTo::create(VirtualMap::SPEED,VirtualMap::LocToPos(m_snake.body[i])));
 	}
 	CCActionInterval* tailaction = CCMoveTo::create(VirtualMap::SPEED,VirtualMap::LocToPos(m_snake.tail));
-	
+
 	m_shead->runAction(headaction);
 	m_shead->setRotation(m_snake.head.direction);
 	for(int i=0; i<bodysize; i++)
@@ -168,69 +168,69 @@ Location AIControl::nextMove(SnakeLocation p)
 			ret.direction = Location::TURN_DOWN;
 	}
 
-	
+
 	return ret;
 
 	/*
 	int sum = 0;
 	while (true)
 	{
-		ret = snakes[1].head;
-		sum ++;
-		if (sum > 1000)
-			break;
-		int x,y;
-		cc_timeval psv;  
-		CCTime::gettimeofdayCocos2d( &psv, NULL );
-		unsigned int tsrans = psv.tv_sec * 1000 + psv.tv_usec / 1000 + rand();
-		srand(tsrans);
-		x = CCRANDOM_0_1()*100;
-		x = x % 4;
-		switch(x)
-		{
-		case 0: ret.x++; break;
-		case 1: ret.y++; break;
-		case 2: ret.x--; break;
-		case 3: ret.y--; break;
-		}
-		bool flag = true;
-		for(int i=0; i<snakes.size(); i++)
-		{
-			if (snakes[i].head.x == ret.x || snakes[i].head.y == ret.y)
-			{
-				flag = false;
-				break;
-			}
-			else if (snakes[i].tail.x == ret.x || snakes[i].tail.y == ret.y)
-			{
-				flag = false;
-				break;
-			}
-			else
-			{
-				for(int j=0; j<snakes[i].body.size(); j++)
-				{
-					if (snakes[i].body[j].x == ret.x || snakes[i].body[j].y == ret.y)
-					{
-						flag = false;
-						break;
-					}
-				}
-				if (!flag)
-				{
-					break;
-				}
-			}
-		}
-		if (flag)
-			break;
+	ret = snakes[1].head;
+	sum ++;
+	if (sum > 1000)
+	break;
+	int x,y;
+	cc_timeval psv;  
+	CCTime::gettimeofdayCocos2d( &psv, NULL );
+	unsigned int tsrans = psv.tv_sec * 1000 + psv.tv_usec / 1000 + rand();
+	srand(tsrans);
+	x = CCRANDOM_0_1()*100;
+	x = x % 4;
+	switch(x)
+	{
+	case 0: ret.x++; break;
+	case 1: ret.y++; break;
+	case 2: ret.x--; break;
+	case 3: ret.y--; break;
+	}
+	bool flag = true;
+	for(int i=0; i<snakes.size(); i++)
+	{
+	if (snakes[i].head.x == ret.x || snakes[i].head.y == ret.y)
+	{
+	flag = false;
+	break;
+	}
+	else if (snakes[i].tail.x == ret.x || snakes[i].tail.y == ret.y)
+	{
+	flag = false;
+	break;
+	}
+	else
+	{
+	for(int j=0; j<snakes[i].body.size(); j++)
+	{
+	if (snakes[i].body[j].x == ret.x || snakes[i].body[j].y == ret.y)
+	{
+	flag = false;
+	break;
+	}
+	}
+	if (!flag)
+	{
+	break;
+	}
+	}
+	}
+	if (flag)
+	break;
 	}*/
 }
 
 bool Food::generate()
 {
 	int x,y;
-	loop:
+loop:
 	cc_timeval psv;  
 	CCTime::gettimeofdayCocos2d( &psv, NULL );
 	unsigned int tsrans = psv.tv_sec * 1000 + psv.tv_usec / 1000 + rand();
