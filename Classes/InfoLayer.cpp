@@ -13,6 +13,7 @@ bool InfoLayer::init() {
     CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
 
     std::vector<int> & m_CurScore = VirtualMap::m_CurScore;
+    m_CurScore.clear();
 
     m_CurScore.push_back(0);
     char initstr[50];

@@ -303,7 +303,6 @@ bool SnakesPlay::checkGame() {
 	for(int i=0; i<earthS.body.size(); i++)
 	if (marsS.head == earthS.body[i])
 	return false;*/
-	return true;
 }
 
 void SnakesPlay::StopGameCallback(CCObject* pSender){

@@ -46,6 +46,8 @@ bool GameOverScene::init(){
 	CCMenu* mainmenu = CCMenu::create(newGameItem,exitGameItem,homeItem,NULL);
 	mainmenu->setPosition(ccp(0,0));
 	this->addChild(mainmenu,1,3);
+
+    return true;
 }
 
 void GameOverScene::StartNewGameCallback(CCObject* pSender) {
@@ -57,5 +59,5 @@ void GameOverScene::ExitGameCallback(CCObject* pSender) {
 }
 
 void GameOverScene::ReturnHomeCallback(CCObject* pSender) {
-	CCDirector::sharedDirector()->replaceScene(StartScene::scene());
+    CCDirector::sharedDirector()->replaceScene(StartScene::scene());
 }
