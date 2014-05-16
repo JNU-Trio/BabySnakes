@@ -4,13 +4,11 @@
 
 USING_NS_CC;
 
-bool SimpleSnake::moveTo(Location nextLoc)
-{
+bool SimpleSnake::moveTo(Location nextLoc) {
 	int bodysize = m_snake.body.size();
 	VirtualMap::map[m_snake.tail.x][m_snake.tail.y] = VirtualMap::emptyTag;
 	m_snake.tail = m_snake.body[bodysize-1];
-	for(int i=bodysize-1; i>0; i--)
-	{
+    for(int i=bodysize-1; i>0; i--) {
 		m_snake.body[i] = m_snake.body[i-1];
 	}
 	m_snake.body[0] = m_snake.head;
@@ -18,16 +16,14 @@ bool SimpleSnake::moveTo(Location nextLoc)
 
 	CCActionInterval* headaction = CCMoveTo::create(VirtualMap::SPEED,VirtualMap::LocToPos(m_snake.head));
 	std::vector<CCActionInterval*> bodyaction;
-	for(int i=0; i<bodysize; i++)
-	{
+    for(int i=0; i<bodysize; i++) {
 		bodyaction.push_back(CCMoveTo::create(VirtualMap::SPEED,VirtualMap::LocToPos(m_snake.body[i])));
 	}
 	CCActionInterval* tailaction = CCMoveTo::create(VirtualMap::SPEED,VirtualMap::LocToPos(m_snake.tail));
 
 	m_shead->runAction(headaction);
 	m_shead->setRotation(m_snake.head.direction);
-	for(int i=0; i<bodysize; i++)
-	{
+    for(int i=0; i<bodysize; i++) {
 		m_sbody[i]->runAction(bodyaction[i]);
 	}
 	m_stail->runAction(tailaction);
@@ -35,9 +31,7 @@ bool SimpleSnake::moveTo(Location nextLoc)
 	return true;
 }
 
-void SimpleSnake::eatFood(CCLayer *father_layer)
-{
-
+void SimpleSnake::eatFood(CCLayer *father_layer) {
 	CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
 	CCSize contentSize;
 
@@ -54,34 +48,28 @@ void SimpleSnake::eatFood(CCLayer *father_layer)
 	father_layer->addChild(m_sbody[i]);
 }
 
-bool SimpleSnake::initialize(CCLayer *father_layer, SnakeLocation virtualSnakeLoc, SnakeImgFilename snakeImg)
-{
+bool SimpleSnake::initialize(CCLayer *father_layer,
+                             SnakeLocation virtualSnakeLoc, SnakeImgFilename snakeImg) {
 	CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
 	CCSize contentSize;
 
-	// 初始化图片文件路径
+    // initial the images of the snake need
 	m_snakeImage = snakeImg;
 
-	// 初始化蛇的head,tail,body的位置
+    // initial the location of head, tail and body
 	m_snake = virtualSnakeLoc;
 
-	// head创建sprite
+    // create sprite of head
 	m_shead = CCSprite::create(snakeImg.head);
 	contentSize = m_shead->getContentSize();
 	m_shead->setScaleX(visibleSize.width/VirtualMap::MAP_WIDTH/contentSize.width);
 	m_shead->setScaleY(visibleSize.height/VirtualMap::MAP_HEIGHT/contentSize.height);
 	m_shead->setPosition(VirtualMap::LocToPos(m_snake.head));
 	m_shead->setRotation(m_snake.head.direction);
-	/*
-	switch(m_snake.head.direction){
-	case Location::TURN_UP: m_shead->setRotation(90);break;
-	case Location::TURN_LEFT:m_shead->setRotation(180);break;
-	case Location::TURN_DOWN:m_shead->setRotation(270);break;
-	}
-	*/
+
 	father_layer->addChild(m_shead);
 
-	// tail创建sprite
+    // create sprite of tail
 	m_stail = CCSprite::create(snakeImg.tail);
 	contentSize = m_stail->getContentSize();
 	m_stail->setScaleX(visibleSize.width/VirtualMap::MAP_WIDTH/contentSize.width);
@@ -90,11 +78,10 @@ bool SimpleSnake::initialize(CCLayer *father_layer, SnakeLocation virtualSnakeLo
 	m_stail->setRotation(m_snake.tail.direction);
 	father_layer->addChild(m_stail);
 
-	//  body创建sprite
+    //  create sprites of body
 	CCSprite *stmp = CCSprite::create(snakeImg.body);
 	m_sbody.push_back(stmp);
-	for(int i=0; i<m_sbody.size(); i++)
-	{
+    for(int i=0; i<m_sbody.size(); i++) {
 		contentSize = m_sbody[i]->getContentSize();
 		m_sbody[i]->setScaleX(visibleSize.width/VirtualMap::MAP_WIDTH/contentSize.width);
 		m_sbody[i]->setScaleY(visibleSize.height/VirtualMap::MAP_HEIGHT/contentSize.height);
@@ -106,11 +93,10 @@ bool SimpleSnake::initialize(CCLayer *father_layer, SnakeLocation virtualSnakeLo
 }
 
 
-Location HumanControl::nextMove(SnakeLocation p)
-{
+Location HumanControl::nextMove(SnakeLocation p) {
 	Location ret = p.head;
-	switch(VirtualMap::DIRECTION)
-	{
+    switch(VirtualMap::DIRECTION)
+    {
 	case 0: ret.x--;ret.direction =Location::TURN_LEFT; break;
 	case 1: ret.y++;ret.direction =Location::TURN_UP; break;
 	case 2: ret.x++;ret.direction =Location::TURN_RIGHT; break;
@@ -120,8 +106,7 @@ Location HumanControl::nextMove(SnakeLocation p)
 	return ret;
 }
 
-Location AIControl::nextMove(SnakeLocation p)
-{
+Location AIControl::nextMove(SnakeLocation p) {
 	int dir[4][2] = {-1,0,1,0,0,-1,0,1};
 	Location ret = p.head;
 	Location fp = VirtualMap::foodLocate;
@@ -131,20 +116,18 @@ Location AIControl::nextMove(SnakeLocation p)
 	int msum = a-fp.x < 0 ? fp.x-a:a-fp.x;
 	msum += (b-fp.y < 0 ? fp.y-b:b-fp.y);
 	int i;
-	for(i=0; i<4; i++)
-	{
+    for(i=0; i<4; i++) {
 		ret = p.head;
 		int nx = ret.x+dir[i][0], ny = ret.y+dir[i][1];
 		if ((VirtualMap::map[nx][ny] == VirtualMap::emptyTag
-			|| VirtualMap::map[nx][ny] == VirtualMap::foodTag))
-		{
+            || VirtualMap::map[nx][ny] == VirtualMap::foodTag))
+        {
 			m = i;
 			break;
 		}
 	}
 
-	for(i = m+1; i<4; i++)
-	{
+    for(i = m+1; i<4; i++) {
 		ret = p.head;
 		int nx = ret.x+dir[i][0], ny = ret.y+dir[i][1];
 		if ((VirtualMap::map[nx][ny] == VirtualMap::emptyTag
@@ -227,8 +210,8 @@ Location AIControl::nextMove(SnakeLocation p)
 	}*/
 }
 
-bool Food::generate()
-{
+// implement the food generate randamly
+bool Food::generate() {
 	int x,y;
 loop:
 	cc_timeval psv;  
@@ -262,11 +245,9 @@ loop:
 }
 
 
-bool Barrier::init(CCLayer *father_layer, const std::vector<Location> &bloc , char *filename)
-{
+bool Barrier::init(CCLayer *father_layer, const std::vector<Location> &bloc , char *filename) {
 	imgFilename = filename;
-	for(int i=0; i<bloc.size(); i++)
-	{
+    for(int i=0; i<bloc.size(); i++) {
 		m_locate.push_back(bloc[i]);
 
 		CCSprite *pt = CCSprite::create(filename);
@@ -280,8 +261,7 @@ bool Barrier::init(CCLayer *father_layer, const std::vector<Location> &bloc , ch
 		father_layer->addChild(pt);
 	}
 
-	for(int i=0; i<m_locate.size(); i++)
-	{
+    for(int i=0; i<m_locate.size(); i++) {
 		VirtualMap::map[m_locate[i].x][m_locate[i].y] = VirtualMap::barrierTag;
 	}
 

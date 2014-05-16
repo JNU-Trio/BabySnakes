@@ -7,8 +7,7 @@
 
 #include <vector>
 
-class FightScene : public cocos2d::CCLayer
-{
+class FightScene : public cocos2d::CCLayer {
 public:
 	// Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
 	virtual bool init();  
@@ -19,24 +18,27 @@ public:
 	// implement the "static node()" method manually
 	CREATE_FUNC(FightScene);
 
-private:
 	static const int m_playlayer_zOrder = 2;
-	static const int m_bglayer_zOrder = 1;
-	static const int m_playlayer_tag = 1;
-	static const int m_bglayer_tag = 2;
+    static const int m_playlayer_tag = 1;
+
+    static const int m_bglayer_zOrder = 1;
+    static const int m_bglayer_tag = 2;
+
+    static const int m_infolayer_zOrder = 3;
+    static const int m_infolayer_tag = 3;
 };
 
-class SnakesPlay : public cocos2d::CCLayer
-{
+class SnakesPlay : public cocos2d::CCLayer {
 public:
 	virtual bool init();
 	CREATE_FUNC(SnakesPlay);
 
-	//重写触屏回调函数
+    // implement touch event
 	virtual bool ccTouchBegan(cocos2d::CCTouch* , cocos2d::CCEvent*);
 	virtual void ccTouchMoved(cocos2d::CCTouch* , cocos2d::CCEvent*);
 	virtual void ccTouchEnded(cocos2d::CCTouch* , cocos2d::CCEvent*);
 
+    // implement stop button
 	void StopGameCallback(CCObject* pSender);
 	void scheUpdate(float);
 	bool checkGame();
@@ -46,18 +48,9 @@ public:
 
 private:
 	bool m_disFlag;
-	std::vector<Snake *> m_snakes;
-	bool isStop;
+    bool m_stopFlag;
+    float m_updateTime;
+    std::vector<Snake *> m_snakes;
 };
 
-class GameOver: public cocos2d::CCLayer
-{
-public:
-	virtual bool init();
-	CREATE_FUNC(GameOver);
-	void StartNewGameCallback(CCObject* pSender);
-	void ReturnHomeCallback(CCObject* pSender);
-	void ExitGameCallback(CCObject* pSender);
-
-};
 #endif // __FIGHT_SCENE_H__

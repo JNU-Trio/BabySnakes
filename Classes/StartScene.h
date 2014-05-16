@@ -4,7 +4,7 @@
 #include "cocos2d.h"
 #include "FightScene.h"
 
-class StartScene : public cocos2d::CCLayer{
+class StartScene : public cocos2d::CCLayer {
 public:
 	virtual bool init();
 	static cocos2d::CCScene* scene();

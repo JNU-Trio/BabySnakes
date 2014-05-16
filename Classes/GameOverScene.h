@@ -2,8 +2,7 @@
 #define __GAME_OVER_SCENE_H__
 #include "cocos2d.h"
 
-class GameOverScene : public cocos2d::CCLayer
-{
+class GameOverScene : public cocos2d::CCLayer {
 public:
 	virtual bool init();
 	static cocos2d::CCScene* scene();
