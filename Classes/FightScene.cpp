@@ -1,3 +1,4 @@
+#include "SimpleAudioEngine.h"
 #include "FightScene.h"
 #include "StartScene.h"
 #include "GameOverScene.h"
@@ -45,6 +46,8 @@ bool FightScene::init() {
 	pSprite->setScaleY(visibleSize.height/bgimgSize.height);
 
 	this->addChild(pSprite, 0);
+
+    CocosDenshion::SimpleAudioEngine::sharedEngine()->playBackgroundMusic("background-music.mp3", true);
 
 	return true;
 }
@@ -237,6 +240,7 @@ void SnakesPlay::scheUpdate(float time) {
         if (m_snakes[i]->m_snake.head == curfood.m_locate) {
 			m_snakes[i]->eatFood(this);
             curfood.generate();
+            CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("eatfood-sound.mp3");
             VirtualMap::m_CurScore[i] += 2;
 		}
 	}

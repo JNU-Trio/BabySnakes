@@ -14,8 +14,9 @@ SOURCES = main.cpp \
 COCOS_ROOT = /home/toufu/Software/cocos2d-x-2.2.3
 include $(COCOS_ROOT)/cocos2dx/proj.linux/cocos2dx.mk
 
-SHAREDLIBS += -lcocos2d
-COCOS_LIBS = $(LIB_DIR)/libcocos2d.so
+SHAREDLIBS += -lcocos2d -lcocosdenshion
+COCOS_LIBS = $(LIB_DIR)/libcocos2d.so $(LIB_DIR)/libcocosdenshion.so
+INCLUDES += -I$(COCOS_ROOT)/CocosDenshion/include
 
 $(TARGET): $(OBJECTS) $(STATICLIBS) $(COCOS_LIBS) $(CORE_MAKEFILE_LIST)
 	@mkdir -p $(@D)
