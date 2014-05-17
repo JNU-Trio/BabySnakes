@@ -10,11 +10,11 @@ USING_NS_CC;
 
 CCScene* FightScene::scene()
 {
-    // 'scene' is an autorelease object
-    CCScene *scene = CCScene::create();
+	// 'scene' is an autorelease object
+	CCScene *scene = CCScene::create();
 
 	// 添加背景
-    FightScene *bglayer = FightScene::create();
+	FightScene *bglayer = FightScene::create();
 	scene->addChild(bglayer, m_bglayer_zOrder, m_bglayer_tag);
 
 	//添加计分层
@@ -25,38 +25,38 @@ CCScene* FightScene::scene()
 	// 添加蛇的运动层
 	SnakesPlay *playlayer = SnakesPlay::create();
 	scene->addChild(playlayer, m_playlayer_zOrder, m_playlayer_tag);
-    // return the scene
-    return scene;
+	// return the scene
+	return scene;
 }
 
 // on "init" you need to initialize your instance
 bool FightScene::init()
 {
-    //////////////////////////////
-    // 1. super init first
-    if ( !CCLayer::init() )
-    {
-        return false;
-    }
-    
-    CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
-    CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
+	//////////////////////////////
+	// 1. super init first
+	if ( !CCLayer::init() )
+	{
+		return false;
+	}
 
-    // 添加背景图片
-    CCSprite* pSprite = CCSprite::create("backgrounds/background1.png");
+	CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
+	CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
 
-    // 设置背景位置
-    pSprite->setPosition(ccp(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
+	// 添加背景图片
+	CCSprite* pSprite = CCSprite::create("backgrounds/background1.png");
+
+	// 设置背景位置
+	pSprite->setPosition(ccp(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
 
 	// 背景图片缩放
 	CCSize bgimgSize = pSprite->getContentSize();
 	pSprite->setScaleX(visibleSize.width/bgimgSize.width);
 	pSprite->setScaleY(visibleSize.height/bgimgSize.height);
 
-    // 将背景sprite作为子结点加入本layer
-    this->addChild(pSprite, 0);
-    
-    return true;
+	// 将背景sprite作为子结点加入本layer
+	this->addChild(pSprite, 0);
+
+	return true;
 }
 
 bool SnakesPlay::init()
@@ -97,7 +97,7 @@ bool SnakesPlay::init()
 
 	isStop = false;
 	CCMenuItemImage *StopGameItem = CCMenuItemImage::create("buttons/pause.png", "buttons/pause.png");
-	CCMenuItemImage *StartGameItem = CCMenuItemImage::create("buttons/play.png", "buttons/paly.png");
+	CCMenuItemImage *StartGameItem = CCMenuItemImage::create("buttons/play.png", "buttons/play.png");
 	CCMenuItemToggle *StopOrStartItem = CCMenuItemToggle::createWithTarget(this,menu_selector(SnakesPlay::StopGameCallback), StopGameItem,StartGameItem, NULL);  
 	StopOrStartItem->setEnabled(true);
 	StopOrStartItem->setScale(0.5);
@@ -156,7 +156,7 @@ bool SnakesPlay::init()
 
 	SnakeImgFilename curImage;
 	std::vector<SnakeImgFilename> snakeImages;
-	
+
 
 	// 创建地球蛇位置
 	curSnake.head.x = 8;
@@ -263,7 +263,7 @@ void SnakesPlay::scheUpdate(float time)
 	if (!checkGame())
 	{
 		CCDirector::sharedDirector()->replaceScene(GameOverScene::scene());
-		
+
 	}
 
 	for(int i=0; i<m_snakes.size(); i++)
@@ -323,22 +323,22 @@ bool SnakesPlay::checkGame()
 
 	/*SnakeLocation earthS = m_snakes[0]->m_snake, marsS = m_snakes[1]->m_snake;
 	for(int i=0; i<m_snakes.size(); i++)
-		for(int j=0; j<=m_walls.m_locate.size(); j++)
-			if (m_walls.m_locate[i] == m_snakes[i]->m_snake.head)
-				return false;
+	for(int j=0; j<=m_walls.m_locate.size(); j++)
+	if (m_walls.m_locate[i] == m_snakes[i]->m_snake.head)
+	return false;
 	if (earthS.head == marsS.head)
-		return false;
+	return false;
 	if (earthS.head == marsS.tail)
-		return false;
+	return false;
 	for(int i=0; i<marsS.body.size(); i++)
-		if (earthS.head == marsS.body[i])
-			return false;
+	if (earthS.head == marsS.body[i])
+	return false;
 
 	if (marsS.head == earthS.tail)
-		return false;
+	return false;
 	for(int i=0; i<earthS.body.size(); i++)
-		if (marsS.head == earthS.body[i])
-			return false;*/
+	if (marsS.head == earthS.body[i])
+	return false;*/
 	return true;
 }
 
@@ -359,13 +359,13 @@ bool GameOver::init(){
 		return false;
 	}
 	CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
-    CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
+	CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
 
-    // 添加背景图片
-    CCSprite* pSprite = CCSprite::create("backgrounds/gameover.png");
+	// 添加背景图片
+	CCSprite* pSprite = CCSprite::create("backgrounds/gameover.png");
 
-    // 设置背景位置
-    pSprite->setPosition(ccp(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
+	// 设置背景位置
+	pSprite->setPosition(ccp(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
 
 	// 背景图片缩放
 	CCSize bgimgSize = pSprite->getContentSize();
@@ -373,28 +373,28 @@ bool GameOver::init(){
 	pSprite->setScaleY(visibleSize.height/bgimgSize.height);
 	//pSprite->setScale(0.5);
 
-    // 将背景sprite作为子结点加入本layer
-    this->addChild(pSprite, 0);
+	// 将背景sprite作为子结点加入本layer
+	this->addChild(pSprite, 0);
 
 	CCMenuItemImage *newGameItem = CCMenuItemImage::create("buttons/playbutton.png", "buttons/pausebutton.png",this,menu_selector(GameOver::StartNewGameCallback));
-    newGameItem->setScale(0.1);
-    newGameItem->setPosition(ccp(visibleSize.width / 3,visibleSize.height / 2 - 20));
-    newGameItem->setEnabled(true);
+	newGameItem->setScale(0.1);
+	newGameItem->setPosition(ccp(visibleSize.width / 3,visibleSize.height / 2 - 20));
+	newGameItem->setEnabled(true);
 
 	CCMenuItemImage *exitGameItem = CCMenuItemImage::create("buttons/playbutton.png", "buttons/pausebutton.png",this,menu_selector(GameOver::ExitGameCallback));
-    exitGameItem->setScale(0.1);
-    exitGameItem->setPosition(ccp(visibleSize.width*2 / 3,visibleSize.height / 2 - 20));
-    exitGameItem->setEnabled(true);
+	exitGameItem->setScale(0.1);
+	exitGameItem->setPosition(ccp(visibleSize.width*2 / 3,visibleSize.height / 2 - 20));
+	exitGameItem->setEnabled(true);
 
 	CCMenu* mainmenu = CCMenu::create(newGameItem,exitGameItem,NULL);
-    mainmenu->setPosition(ccp(0,0));
-    this->addChild(mainmenu,1,3);
+	mainmenu->setPosition(ccp(0,0));
+	this->addChild(mainmenu,1,3);
 	this->setVisible(false);
 }
 
 void GameOver::StartNewGameCallback(CCObject* pSender)
 {
-    CCDirector::sharedDirector()->replaceScene(FightScene::scene());
+	CCDirector::sharedDirector()->replaceScene(FightScene::scene());
 }
 
 void GameOver::ExitGameCallback(CCObject* pSender)

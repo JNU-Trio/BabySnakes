@@ -4,14 +4,12 @@
 #include "cocos2d.h"
 #include "FightScene.h"
 
-
-
 class StartScene : public cocos2d::CCLayer{
 public:
-	    virtual bool init();
-		static cocos2d::CCScene* scene();
-		CREATE_FUNC(StartScene);
-		void StartGameCallback(CCObject* pSender);
+	virtual bool init();
+	static cocos2d::CCScene* scene();
+	CREATE_FUNC(StartScene);
+	void StartGameCallback(CCObject* pSender);
 };
 
 #endif

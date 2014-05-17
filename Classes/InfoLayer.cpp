@@ -6,9 +6,9 @@ USING_NS_CC;
 bool InfoLayer::init()
 {
 	if ( !CCLayer::init() )
-    {
-        return false;
-    }
+	{
+		return false;
+	}
 
 	CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
 
