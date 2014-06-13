@@ -2,77 +2,51 @@
 #define __SNAKES_H_
 
 #include "cocos2d.h"
-#include "MapAttribute.h"
 #include <vector>
 
-struct SnakeImgFilename
-{
+#include "MapAttribute.h"
+#include "Effect.h"
+
+struct SnakeImgFilename {
 	char *head,*body,*tail;
 };
 
-// 抽象蛇
-class Snake
-{
+// Abstract class of Snakes
+class Snake : public FoodEffect {
 public:
-	// 蛇移向下一个位置
-	virtual bool moveTo(Location)=0;
+	virtual void updateVirtualMap();
+	virtual bool moveTo(Location);
+	int getScore();
+	bool hitOther(Location);
+	bool hitBody(Location);
+	bool hitFood(Location);
+	bool hitBarrier(Location);
 
-	// 蛇吃食物
-	virtual void eatFood(cocos2d::CCLayer *)=0;
-
-	// 蛇的初始化
-	virtual bool initialize(cocos2d::CCLayer *, SnakeLocation, SnakeImgFilename)=0;
-
-	// 蛇的位置信息
 	SnakeLocation m_snake;
+	SnakeImgFilename m_snakeImage;
 
-	// 组成蛇的sprite集合
 	cocos2d::CCSprite *m_shead, *m_stail;
 	std::vector<cocos2d::CCSprite *> m_sbody;
+    
+	cocos2d::CCNode *father;
 
-	// 组成蛇的图片
-	SnakeImgFilename m_snakeImage;
+	int m_score;
+	int m_tag;
+
+	bool m_victorFlag;
 };
 
-// 继承抽象蛇的简单蛇
-class SimpleSnake : public Snake
-{
+// a kind of snake for control by inherit the Snake.class
+class SimpleSnake : public Snake {
+public:
 	bool moveTo(Location);
-	void eatFood(cocos2d::CCLayer *);
-	bool initialize(cocos2d::CCLayer *, SnakeLocation, SnakeImgFilename);
-};
+	void updateVirtualMap();
 
-class Control
-{
-public:
-	virtual Location nextMove(SnakeLocation) = 0;
-};
-
-class AIControl : public Control
-{
-	Location nextMove(SnakeLocation);
-};
-
-class HumanControl : public Control
-{
-	Location nextMove(SnakeLocation);
-};
-
-class Food
-{
-public:
-	Location m_locate;
-	bool generate();
-	cocos2d::CCNode *m_food;
-};
-
-class Barrier
-{
-public:
-	std::vector<Location> m_locate;
-	std::vector<cocos2d::CCSprite *> m_images;
-	char *imgFilename;
-	bool init(cocos2d::CCLayer *, const std::vector<Location> &, char *);
+	// food effect
+	void addScore(int);
+	void disappear();
+	void beLonger(int);
+	void beShorter(int);
 };
 
 #endif // __SNAKES_H_

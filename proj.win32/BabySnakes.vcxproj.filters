@@ -7,6 +7,12 @@
     <Filter Include="Classes">
       <UniqueIdentifier>{bb6c862e-70e9-49d9-81b7-3829a6f50471}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\Factory">
+      <UniqueIdentifier>{c50e5048-cc85-4d00-b563-c9a3e10390dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\GameElement">
+      <UniqueIdentifier>{9a36726f-725a-4300-a9bb-fff944850cb5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -18,20 +24,50 @@
     <ClCompile Include="..\Classes\FightScene.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\Snakes.cpp">
+    <ClCompile Include="..\Classes\GameOverLayer.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\MapAttribute.cpp">
-      <Filter>Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\InforLayer.cpp">
+    <ClCompile Include="..\Classes\InfoLayer.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\StartScene.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\GameOverScene.cpp">
+    <ClCompile Include="..\Classes\SnakesPlay.cpp">
       <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\BackgroundLayer.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\SpriteFactory.cpp">
+      <Filter>Classes\Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\SnakeFactory.cpp">
+      <Filter>Classes\Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Barrier.cpp">
+      <Filter>Classes\GameElement</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Control.cpp">
+      <Filter>Classes\GameElement</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Effect.cpp">
+      <Filter>Classes\GameElement</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Food.cpp">
+      <Filter>Classes\GameElement</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Snakes.cpp">
+      <Filter>Classes\GameElement</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\MapAttribute.cpp">
+      <Filter>Classes\GameElement</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\BarrierFactory.cpp">
+      <Filter>Classes\Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\FoodFactory.cpp">
+      <Filter>Classes\Factory</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -44,10 +80,7 @@
     <ClInclude Include="..\Classes\FightScene.h">
       <Filter>Classes</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\Snakes.h">
-      <Filter>Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\MapAttribute.h">
+    <ClInclude Include="..\Classes\GameOverLayer.h">
       <Filter>Classes</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\InfoLayer.h">
@@ -56,8 +89,41 @@
     <ClInclude Include="..\Classes\StartScene.h">
       <Filter>Classes</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\GameOverScene.h">
+    <ClInclude Include="..\Classes\SnakesPlay.h">
       <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\BackgroundLayer.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\SpriteFactory.h">
+      <Filter>Classes\Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\SnakeFactory.h">
+      <Filter>Classes\Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Barrier.h">
+      <Filter>Classes\GameElement</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Control.h">
+      <Filter>Classes\GameElement</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Effect.h">
+      <Filter>Classes\GameElement</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Food.h">
+      <Filter>Classes\GameElement</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Snakes.h">
+      <Filter>Classes\GameElement</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\MapAttribute.h">
+      <Filter>Classes\GameElement</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\BarrierFactory.h">
+      <Filter>Classes\Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\FoodFactory.h">
+      <Filter>Classes\Factory</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

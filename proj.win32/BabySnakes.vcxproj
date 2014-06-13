@@ -133,21 +133,41 @@ xcopy /Y /Q "$(COCOS2DX_HOME)\external\libwebsockets\win32\lib\*.*" "$(OutDir)"<
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
+    <ClCompile Include="..\Classes\BackgroundLayer.cpp" />
+    <ClCompile Include="..\Classes\Barrier.cpp" />
+    <ClCompile Include="..\Classes\BarrierFactory.cpp" />
+    <ClCompile Include="..\Classes\Control.cpp" />
     <ClCompile Include="..\Classes\FightScene.cpp" />
-    <ClCompile Include="..\Classes\GameOverScene.cpp" />
-    <ClCompile Include="..\Classes\InforLayer.cpp" />
+    <ClCompile Include="..\Classes\Effect.cpp" />
+    <ClCompile Include="..\Classes\Food.cpp" />
+    <ClCompile Include="..\Classes\FoodFactory.cpp" />
+    <ClCompile Include="..\Classes\GameOverLayer.cpp" />
+    <ClCompile Include="..\Classes\InfoLayer.cpp" />
     <ClCompile Include="..\Classes\MapAttribute.cpp" />
+    <ClCompile Include="..\Classes\SnakeFactory.cpp" />
     <ClCompile Include="..\Classes\Snakes.cpp" />
+    <ClCompile Include="..\Classes\SnakesPlay.cpp" />
+    <ClCompile Include="..\Classes\SpriteFactory.cpp" />
     <ClCompile Include="..\Classes\StartScene.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Classes\AppDelegate.h" />
+    <ClInclude Include="..\Classes\BackgroundLayer.h" />
+    <ClInclude Include="..\Classes\Barrier.h" />
+    <ClInclude Include="..\Classes\BarrierFactory.h" />
+    <ClInclude Include="..\Classes\Control.h" />
     <ClInclude Include="..\Classes\FightScene.h" />
-    <ClInclude Include="..\Classes\GameOverScene.h" />
+    <ClInclude Include="..\Classes\Effect.h" />
+    <ClInclude Include="..\Classes\Food.h" />
+    <ClInclude Include="..\Classes\FoodFactory.h" />
+    <ClInclude Include="..\Classes\GameOverLayer.h" />
     <ClInclude Include="..\Classes\InfoLayer.h" />
     <ClInclude Include="..\Classes\MapAttribute.h" />
+    <ClInclude Include="..\Classes\SnakeFactory.h" />
     <ClInclude Include="..\Classes\Snakes.h" />
+    <ClInclude Include="..\Classes\SnakesPlay.h" />
+    <ClInclude Include="..\Classes\SpriteFactory.h" />
     <ClInclude Include="..\Classes\StartScene.h" />
     <ClInclude Include="main.h" />
   </ItemGroup>
