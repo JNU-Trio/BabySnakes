@@ -8,10 +8,12 @@
 
 class FoodEffect {
 public:
-	virtual void addScore(int) = 0;
-	virtual void disappear() = 0;
-	virtual void beLonger(int) = 0;
-	virtual void beShorter(int) = 0;
+	virtual void addScore(int){};
+	virtual void reduceScore(int){};
+	virtual void disappear(int){};
+	virtual void beLonger(int){};
+	virtual void beShorter(int){};
+	virtual void addSpeed(int){};
 };
 
 #endif // __EFFECT_H__

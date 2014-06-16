@@ -15,4 +15,9 @@ public:
     cocos2d::CCSprite* getSprite(char *, Location);
 };
 
+class BgSpriteFactory : public SpriteFactory {
+public:
+    cocos2d::CCSprite* getSprite(char *, Location);
+};
+
 #endif // __SPRITEFACTORY_H

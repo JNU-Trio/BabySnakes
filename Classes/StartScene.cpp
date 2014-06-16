@@ -1,4 +1,5 @@
 #include "StartScene.h"
+#include "DescriptionScene.h"
 
 USING_NS_CC;
 
@@ -16,18 +17,18 @@ bool StartScene::init(){
     CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
     CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
 
-    // 添加背景图片
+    // create background image
     CCSprite* pSprite = CCSprite::create("backgrounds/background0.png");
 
-    // 设置背景位置
+    // set position
     pSprite->setPosition(ccp(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
 
-    // 背景图片缩放
+    // set scale
     CCSize bgimgSize = pSprite->getContentSize();
     pSprite->setScaleX(visibleSize.width/bgimgSize.width);
     pSprite->setScaleY(visibleSize.height/bgimgSize.height);
 
-    // 将背景sprite作为子结点加入本layer
+    // add bgSprite to bgLayer
     this->addChild(pSprite, 0);
 
     CCMenuItemImage *startGameItem = CCMenuItemImage::create("buttons/playbut.png", "buttons/playbut.png",this,menu_selector(StartScene::StartGameCallback));
@@ -42,5 +43,6 @@ bool StartScene::init(){
 }
 
 void StartScene::StartGameCallback(CCObject* pSender) {
-    CCDirector::sharedDirector()->replaceScene(FightScene::scene(1));
+	CCDirector::sharedDirector()->replaceScene(CCTransitionPageTurn::create(1.0f,
+		DescriptionScene::getScene(VirtualMap::SCENE_TYPE_SINGLE), false));
 }

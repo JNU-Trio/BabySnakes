@@ -13,6 +13,9 @@
     <Filter Include="Classes\GameElement">
       <UniqueIdentifier>{9a36726f-725a-4300-a9bb-fff944850cb5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\AllPlay">
+      <UniqueIdentifier>{12237470-6c26-4624-9669-c4a529fad675}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -51,9 +54,6 @@
     <ClCompile Include="..\Classes\Control.cpp">
       <Filter>Classes\GameElement</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\Effect.cpp">
-      <Filter>Classes\GameElement</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\Food.cpp">
       <Filter>Classes\GameElement</Filter>
     </ClCompile>
@@ -68,6 +68,24 @@
     </ClCompile>
     <ClCompile Include="..\Classes\FoodFactory.cpp">
       <Filter>Classes\Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\DoubleSnakePlay.cpp">
+      <Filter>Classes\AllPlay</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\SingleSnakePlay.cpp">
+      <Filter>Classes\AllPlay</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\DescriptionScene.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\DisappearSnakePlay.cpp">
+      <Filter>Classes\AllPlay</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\DiceSnakePlay.cpp">
+      <Filter>Classes\AllPlay</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\BossSnakePlay.cpp">
+      <Filter>Classes\AllPlay</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -124,6 +142,24 @@
     </ClInclude>
     <ClInclude Include="..\Classes\FoodFactory.h">
       <Filter>Classes\Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\DoubleSnakePlay.h">
+      <Filter>Classes\AllPlay</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\SingleSnakePlay.h">
+      <Filter>Classes\AllPlay</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\DescriptionScene.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\DisappearSnakePlay.h">
+      <Filter>Classes\AllPlay</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\DiceSnakePlay.h">
+      <Filter>Classes\AllPlay</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\BossSnakePlay.h">
+      <Filter>Classes\AllPlay</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

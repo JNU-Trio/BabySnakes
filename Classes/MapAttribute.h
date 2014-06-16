@@ -5,11 +5,6 @@
 
 struct Location {
 	Location():x(0),y(0),direction(0){};
-	Location(int _x, int _y) {
-		x = _x;
-		y = _y;
-		direction = 0;
-	};
 
 	int direction;
 	int x,y;
@@ -36,7 +31,7 @@ class VirtualMap {
 public:
 	static const int MAP_WIDTH = 20;
 	static const int MAP_HEIGHT = 12;
-	static float SPEED;
+	static float MIN_SPEED;
 
     static int DIRECTION;
 
@@ -48,13 +43,28 @@ public:
 	static const int marsSnakeTag = 3;
 	static const int barrierTag = 4;
 
+	static const int SCENE_TYPE_SINGLE = 1;
+	static const int SCENE_TYPE_DOUBLE = 2;
+	static const int SCENE_TYPE_DISAPPEAR = 3;
+	static const int SCENE_TYPE_ZHA = 4;
+	static const int SCENE_TYPE_DICE = 5;
+	static const int SCENE_TYPE_BOSS = 6;
+
 	static cocos2d::CCPoint LocToPos(Location);
+	static int getRandom(int);
+	static std::vector<Location> getNewLoc(int length);
 
 	static bool init();
 
 	static void changeTag(Location,int);
 
     static std::vector<int> m_CurScore;
+
+private:
+	static std::vector<Location> path;
+	static bool dfs(Location,int);
+	static int dir[4][2];
+	static int aimLength;
 };
 
 #endif // __MAP_ATTRIBUTE_H_

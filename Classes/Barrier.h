@@ -6,7 +6,7 @@
 
 #include "MapAttribute.h"
 
-class Barrier : cocos2d::CCObject {
+class Barrier {
 public:
 	std::vector<Location> m_wallLoc;
 	std::vector<cocos2d::CCSprite *> m_wall;
@@ -18,6 +18,7 @@ public:
 
 	int m_tag;
 
+	bool hitBarrier(Location);
 	void updateVirtualMap();
 };
 

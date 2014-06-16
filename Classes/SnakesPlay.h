@@ -13,7 +13,9 @@
 class SnakesPlay : public cocos2d::CCLayer {
 public:
 	virtual bool init();
-	virtual void judge(std::vector<Location>) = 0;
+	virtual void checkGame();
+	virtual void judge() = 0;
+	virtual void scheUpdate(float) = 0;
     // implement touch event
 	bool ccTouchBegan(cocos2d::CCTouch* , cocos2d::CCEvent*);
 	void ccTouchMoved(cocos2d::CCTouch* , cocos2d::CCEvent*);
@@ -21,8 +23,7 @@ public:
 
     // implement stop button
 	void StopGameCallback(CCObject* pSender);
-	bool hitFood();
-	void scheUpdate(float);
+	
 	Food *m_food;
 	Barrier *m_barrier;
 
@@ -33,12 +34,5 @@ protected:
     std::vector<Snake *> m_snakes;
 	std::vector<Control *> m_controls;
 };
-
-class DoubleSnakePlay : public SnakesPlay {
-public:
-	virtual bool init();
-	virtual void judge(std::vector<Location>);
-	CREATE_FUNC(DoubleSnakePlay);
-}
 
 #endif // __SNAKES_PLAY_H__

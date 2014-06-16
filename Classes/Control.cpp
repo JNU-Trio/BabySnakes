@@ -4,10 +4,10 @@ Location HumanControl::nextMove(SnakeLocation p) {
 	Location ret = p.head;
     switch(VirtualMap::DIRECTION)
     {
-	case 0: ret.x--;ret.direction =Location::TURN_LEFT; break;
-	case 1: ret.y++;ret.direction =Location::TURN_UP; break;
-	case 2: ret.x++;ret.direction =Location::TURN_RIGHT; break;
-	case 3: ret.y--;ret.direction =Location::TURN_DOWN; break;
+	case 0: ret.x--;ret.direction = Location::TURN_LEFT; break;
+	case 1: ret.y++;ret.direction = Location::TURN_UP; break;
+	case 2: ret.x++;ret.direction = Location::TURN_RIGHT; break;
+	case 3: ret.y--;ret.direction = Location::TURN_DOWN; break;
 	}
 
 	return ret;
@@ -20,7 +20,10 @@ Location AIControl::nextMove(SnakeLocation p) {
 	for(int i=1; i<=VirtualMap::MAP_WIDTH; i++)
 		for(int j=1; j<=VirtualMap::MAP_HEIGHT; j++)
 			if (VirtualMap::map[i][j] == VirtualMap::foodTag) {
-				Location tmp(i,j);
+				Location tmp;
+				tmp.x = i;
+				tmp.y = j;
+				tmp.direction = Location::TURN_RIGHT;
 				fp = tmp;
 			}
 	int m = 0;

@@ -82,7 +82,12 @@ char *BarrierFactory::getWallsImg(const int type) {
 	char *img;
 	switch(type)
 	{
-	case 1: img = "barriers/wall1.png"; break;
+	case BARRIER_TYPE_SINGLE : img = "barriers/wall1.png"; break;
+	case BARRIER_TYPE_DOUBLE : img = "barriers/wall2.png"; break;
+	case BARRIER_TYPE_DISAPPEAR :img = "barriers/wall3.png"; break;
+	case BARRIER_TYPE_ZHA :img = "barriers/wall4.png"; break;
+	case BARRIER_TYPE_DICE :img = "barriers/wall5.png"; break;
+	case BARRIER_TYPE_BOSS : img = "barriers/wall6.png"; break;
 	}
 	return img;
 }
@@ -91,7 +96,12 @@ char *BarrierFactory::getBarrierImg(const int type) {
 	char *img;
 	switch(type)
 	{
-	case 1: img = "barriers/barrier1.png"; break;
+	case BARRIER_TYPE_SINGLE : img = "barriers/barrier1.png"; break;
+	case BARRIER_TYPE_DOUBLE : img = "barriers/barrier2.png"; break;
+	case BARRIER_TYPE_DISAPPEAR :img = "barriers/barrier3.png"; break;
+	case BARRIER_TYPE_ZHA :img = "barriers/barrier4.png"; break;
+	case BARRIER_TYPE_DICE :img = "barriers/barrier5.png"; break;
+	case BARRIER_TYPE_BOSS :img = "barriers/barrier6.png"; break;
 	}
 	return img;
 }

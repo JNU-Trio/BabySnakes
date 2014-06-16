@@ -3,8 +3,23 @@
 #include <vector>
 
 #include "BackgroundLayer.h"
+#include "SpriteFactory.h"
 
 USING_NS_CC;
+
+bool SingleBackground::init() {
+    // super init first
+    if ( !CCLayer::init() ) {
+        return false;
+    }
+	SpriteFactory *factory = new BgSpriteFactory();
+	Location tmp;
+    this->addChild(factory->getSprite("backgrounds/background1.png",tmp), 0);
+
+    CocosDenshion::SimpleAudioEngine::sharedEngine()->playBackgroundMusic("background-music.mp3", true);
+
+    return true;
+}
 
 bool DoubleBackground::init() {
     // super init first
@@ -12,17 +27,54 @@ bool DoubleBackground::init() {
         return false;
     }
 
-    CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
-    CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
+    SpriteFactory *factory = new BgSpriteFactory();
+	Location tmp;
+    this->addChild(factory->getSprite("backgrounds/background2.png",tmp), 0);
 
-    // create background sprite
-    CCSprite* pSprite = CCSprite::create("backgrounds/background1.png");
-    pSprite->setPosition(ccp(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
-    CCSize bgimgSize = pSprite->getContentSize();
-    pSprite->setScaleX(visibleSize.width/bgimgSize.width);
-    pSprite->setScaleY(visibleSize.height/bgimgSize.height);
+    CocosDenshion::SimpleAudioEngine::sharedEngine()->playBackgroundMusic("background-music.mp3", true);
 
-    this->addChild(pSprite, 0);
+    return true;
+}
+
+bool DisappearBackground::init() {
+    // super init first
+    if ( !CCLayer::init() ) {
+        return false;
+    }
+
+    SpriteFactory *factory = new BgSpriteFactory();
+	Location tmp;
+    this->addChild(factory->getSprite("backgrounds/background3.png",tmp), 0);
+
+    CocosDenshion::SimpleAudioEngine::sharedEngine()->playBackgroundMusic("background-music.mp3", true);
+
+    return true;
+}
+
+bool DiceBackground::init() {
+    // super init first
+    if ( !CCLayer::init() ) {
+        return false;
+    }
+
+    SpriteFactory *factory = new BgSpriteFactory();
+	Location tmp;
+    this->addChild(factory->getSprite("backgrounds/background1.png",tmp), 0);
+
+    CocosDenshion::SimpleAudioEngine::sharedEngine()->playBackgroundMusic("background-music.mp3", true);
+
+    return true;
+}
+
+bool BossBackground::init() {
+    // super init first
+    if ( !CCLayer::init() ) {
+        return false;
+    }
+
+    SpriteFactory *factory = new BgSpriteFactory();
+	Location tmp;
+    this->addChild(factory->getSprite("backgrounds/background6.png",tmp), 0);
 
     CocosDenshion::SimpleAudioEngine::sharedEngine()->playBackgroundMusic("background-music.mp3", true);
 

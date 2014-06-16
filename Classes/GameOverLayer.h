@@ -7,13 +7,14 @@ public:
     bool init();
     CREATE_FUNC(GameOverLayer);
 	void StartNewGameCallback(CCObject* pSender);
+	void StartNextCallback(CCObject* pSender);
 	void ReturnHomeCallback(CCObject* pSender);
 	void ExitGameCallback(CCObject* pSender);
+	static cocos2d::CCScene *getScene(int, bool);
 
-    cocos2d::CCLabelTTF *getLabel();
-
-private :
-    cocos2d::CCLabelTTF *m_label;
+	static char *m_bgImage;
+	static int m_nextScene;
+	static int m_curScene;
 };
 
 #endif

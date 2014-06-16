@@ -5,6 +5,7 @@
 
 #include "MapAttribute.h"
 #include "Food.h"
+#include "Effect.h"
 
 class FoodFactory {
 public:
@@ -16,6 +17,25 @@ public:
 	Food *createFood(cocos2d::CCNode *);
 	char *getImg();
 	Location getLoc();
+};
+
+class DisappearFoodFactory : public FoodFactory {
+public:
+	Food *createFood(cocos2d::CCNode *);
+	std::vector<char *> getImg();
+};
+
+class DiceFoodFactory : public FoodFactory {
+public:
+	Food *createFood(cocos2d::CCNode *);
+	char *getImg();
+	Location getLoc();
+};
+
+class MultiFoodFactory : public FoodFactory {
+	Food *createFood(cocos2d::CCNode *);
+	std::vector<char *> getImg();
+	std::vector<Location> getLoc();
 };
 
 #endif // __FOOD_FACTORY_H_
